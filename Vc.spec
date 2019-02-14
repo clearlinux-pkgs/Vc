@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : Vc
 Version  : 1.4.1
-Release  : 1
+Release  : 2
 URL      : https://github.com/VcDevel/Vc/releases/download/1.4.1/Vc-1.4.1.tar.gz
 Source0  : https://github.com/VcDevel/Vc/releases/download/1.4.1/Vc-1.4.1.tar.gz
 Summary  : No detailed summary available
