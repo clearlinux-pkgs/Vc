@@ -5,13 +5,14 @@
 %define keepstatic 1
 Name     : Vc
 Version  : 1.4.1
-Release  : 2
+Release  : 3
 URL      : https://github.com/VcDevel/Vc/releases/download/1.4.1/Vc-1.4.1.tar.gz
 Source0  : https://github.com/VcDevel/Vc/releases/download/1.4.1/Vc-1.4.1.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
 Requires: Vc-license = %{version}-%{release}
+BuildRequires : Vc-dev
 BuildRequires : buildreq-cmake
 
 %description
@@ -23,6 +24,7 @@ BuildRequires : buildreq-cmake
 Summary: dev components for the Vc package.
 Group: Development
 Provides: Vc-devel = %{version}-%{release}
+Requires: Vc = %{version}-%{release}
 
 %description dev
 dev components for the Vc package.
@@ -36,26 +38,41 @@ Group: Default
 license components for the Vc package.
 
 
+%package staticdev
+Summary: staticdev components for the Vc package.
+Group: Default
+Requires: Vc-dev = %{version}-%{release}
+
+%description staticdev
+staticdev components for the Vc package.
+
+
 %prep
 %setup -q -n Vc-1.4.1
+cd %{_builddir}/Vc-1.4.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1547232989
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1604085531
 mkdir -p clr-build
 pushd clr-build
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake ..
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1547232989
+export SOURCE_DATE_EPOCH=1604085531
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Vc
-cp LICENSE %{buildroot}/usr/share/package-licenses/Vc/LICENSE
+cp %{_builddir}/Vc-1.4.1/LICENSE %{buildroot}/usr/share/package-licenses/Vc/6c8c6d9c0fc3041e685edf9266d924ffd2e5002d
 pushd clr-build
 %make_install
 popd
@@ -216,7 +233,6 @@ popd
 /usr/include/Vc/vector
 /usr/include/Vc/vector.h
 /usr/include/Vc/version.h
-/usr/lib64/*.a
 /usr/lib64/cmake/Vc/AddCompilerFlag.cmake
 /usr/lib64/cmake/Vc/CheckCCompilerFlag.cmake
 /usr/lib64/cmake/Vc/CheckCXXCompilerFlag.cmake
@@ -231,4 +247,8 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/Vc/LICENSE
+/usr/share/package-licenses/Vc/6c8c6d9c0fc3041e685edf9266d924ffd2e5002d
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/libVc.a
