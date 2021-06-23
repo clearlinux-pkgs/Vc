@@ -4,17 +4,16 @@
 #
 %define keepstatic 1
 Name     : Vc
-Version  : 1.4.1
-Release  : 4
-URL      : https://github.com/VcDevel/Vc/releases/download/1.4.1/Vc-1.4.1.tar.gz
-Source0  : https://github.com/VcDevel/Vc/releases/download/1.4.1/Vc-1.4.1.tar.gz
+Version  : 1.4.2
+Release  : 5
+URL      : https://github.com/VcDevel/Vc/releases/download/1.4.2/Vc-1.4.2.tar.gz
+Source0  : https://github.com/VcDevel/Vc/releases/download/1.4.2/Vc-1.4.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
 Requires: Vc-license = %{version}-%{release}
 BuildRequires : Vc-dev
 BuildRequires : buildreq-cmake
-Patch1: 0001-Add-missing-include-to-simdarray.h.patch
 
 %description
 ###########################################
@@ -49,16 +48,15 @@ staticdev components for the Vc package.
 
 
 %prep
-%setup -q -n Vc-1.4.1
-cd %{_builddir}/Vc-1.4.1
-%patch1 -p1
+%setup -q -n Vc-1.4.2
+cd %{_builddir}/Vc-1.4.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1622845913
+export SOURCE_DATE_EPOCH=1624467847
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -71,10 +69,10 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1622845913
+export SOURCE_DATE_EPOCH=1624467847
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Vc
-cp %{_builddir}/Vc-1.4.1/LICENSE %{buildroot}/usr/share/package-licenses/Vc/6c8c6d9c0fc3041e685edf9266d924ffd2e5002d
+cp %{_builddir}/Vc-1.4.2/LICENSE %{buildroot}/usr/share/package-licenses/Vc/6c8c6d9c0fc3041e685edf9266d924ffd2e5002d
 pushd clr-build
 %make_install
 popd
@@ -90,6 +88,7 @@ popd
 /usr/include/Vc/SimdArray
 /usr/include/Vc/Utils
 /usr/include/Vc/Vc
+/usr/include/Vc/algorithm
 /usr/include/Vc/array
 /usr/include/Vc/avx/casts.h
 /usr/include/Vc/avx/const.h
