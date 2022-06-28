@@ -4,10 +4,10 @@
 #
 %define keepstatic 1
 Name     : Vc
-Version  : 1.4.2
-Release  : 5
-URL      : https://github.com/VcDevel/Vc/releases/download/1.4.2/Vc-1.4.2.tar.gz
-Source0  : https://github.com/VcDevel/Vc/releases/download/1.4.2/Vc-1.4.2.tar.gz
+Version  : 1.4.3
+Release  : 6
+URL      : https://github.com/VcDevel/Vc/releases/download/1.4.3/Vc-1.4.3.tar.gz
+Source0  : https://github.com/VcDevel/Vc/releases/download/1.4.3/Vc-1.4.3.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : BSD-3-Clause
@@ -48,15 +48,15 @@ staticdev components for the Vc package.
 
 
 %prep
-%setup -q -n Vc-1.4.2
-cd %{_builddir}/Vc-1.4.2
+%setup -q -n Vc-1.4.3
+cd %{_builddir}/Vc-1.4.3
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1624467847
+export SOURCE_DATE_EPOCH=1656455492
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -69,10 +69,10 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1624467847
+export SOURCE_DATE_EPOCH=1656455492
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/Vc
-cp %{_builddir}/Vc-1.4.2/LICENSE %{buildroot}/usr/share/package-licenses/Vc/6c8c6d9c0fc3041e685edf9266d924ffd2e5002d
+cp %{_builddir}/Vc-1.4.3/LICENSE %{buildroot}/usr/share/package-licenses/Vc/6c8c6d9c0fc3041e685edf9266d924ffd2e5002d
 pushd clr-build
 %make_install
 popd
